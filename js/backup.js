@@ -8,9 +8,12 @@ function Chat(_nombre,_image){
     this.imageURL = _image;
     this.ultimoMensaje = '';
     this.horaUltimoMensaje = '';
-    this.borrarMensaje = function (){
+    /*this.contiene = function(_buscar){
+        this.nombre.search("")
+    }*/
+    /*this.borrarMensaje = function (){
         alert('Borrado');
-    };
+    };*/
     
 }
 
@@ -21,12 +24,10 @@ var listChats = [
         ultimoMensaje:'', 
         horaUltimoMensaje:''
     },*/
-    //new Chat('Laboratoria Perú','image/logocodeacademy.png'),
+    new Chat('Laboratoria Perú','image/logocodeacademy.png'),
     new Chat('Aldo','image/aldo.jpg'),
     new Chat('Andrea','image/andrea.jpg'),
 ];
-
-
 
 //PARTE VISUAL
 var liListItem = null;
@@ -63,16 +64,6 @@ function setEventsChatList()
         
         arrListItems[i].addEventListener('click', onChatItemClick);
     }
-}
-
-function onChatItemClick(evt)
-{
-    //console.log(evt.currentTarget);//currentTarget para solamente referirme al 'li', evt.target para referirme al elemento especifico que clikeo
-    var contactName = evt.currentTarget.getElementsByClassName('w-contact-name')[0].textContent;
-    var imgURL = evt.currentTarget.getElementsByClassName('wh-44')[0].src;
-   
-    
-    changeChatHeader(contactName,imgURL,'Conectado');
 }
 
 function onSendMessage(evt)
@@ -122,7 +113,18 @@ function createChat(_message)
 
 function createChatList()
 {
+    var divChat = document.getElementById('chat');
+    divChat.innerHTML = '';
+}
+
+function onChatItemClick(evt)
+{
+    //console.log(evt.currentTarget);//currentTarget para solamente referirme al 'li', evt.target para referirme al elemento especifico que clikeo
+    var contactName = evt.currentTarget.getElementsByClassName('w-contact-name')[0].textContent;
+    var imgURL = evt.currentTarget.getElementsByClassName('wh-44')[0].src;
     
+    changeChatHeader(contactName,imgURL,'Conectado');
+    createChatList();
 }
 
 function changeChatHeader(_contactName, _contactImageURL, _contactStatus)
@@ -131,6 +133,29 @@ function changeChatHeader(_contactName, _contactImageURL, _contactStatus)
     chatHeader.getElementsByClassName('w-contact-name')[0].innerHTML= _contactName;
     chatHeader.getElementsByClassName('w-users-messages')[0].innerHTML= _contactStatus;
     chatHeader.getElementsByTagName('img')[0].src = _contactImageURL;
+}
+
+function searchChat()
+{
+    var inputSearch = document.getElementById('search');
+    
+    inputSearch.addEventListener('onclick',onSearching);
+}
+
+function onSearching()
+{
+    var chooseContact = this.value;
+    
+    console.log(chooseContact);
+
+    /*for(var i in liListItem ){
+        
+        if(i.children.children[1].toLowerCase().search(chooseContact.toLowerCase()) == -1){
+            i.style.display = 'none';
+        } else {
+            i.style.display = 'block';
+        }
+    }*/
 }
 
 

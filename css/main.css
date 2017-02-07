@@ -102,12 +102,23 @@ aside.w-contacts header {
 
 .w-search-contacts {
 	padding: 12px 0 7px 59px;
-	width: 85%;
+	width: 15%;
 	border: 1px solid #ededed;
 	border-radius: 5px;
 	font-weight: 400;
 	color: #4b4b4b;
 	font-family: 'Roboto',sans-serif;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+.w-search-contacts:focus {
+    width: 100%;
+}
+
+/* When the input field gets focus, change its width to 100% */
+input[type=text]:focus {
+    width: 100%;
 }
 
 .icon-search:before {
