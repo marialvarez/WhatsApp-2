@@ -14,11 +14,16 @@ function Chat(_nombre,_image,_ultimoMensaje, _hora){
 }
 
 var listChats = [
-
+    /*{
+        nombre:'Chat 1', 
+        imageURL:'image/logocodeacademy.png', 
+        ultimoMensaje:'', 
+        horaUltimoMensaje:''
+    },*/
     new Chat('Laboratoria Perú','image/logocodeacademy.png', 'hellou', '12:30'),
     new Chat('Aldo','image/aldo.jpg', 'hellou', 'ayer'),
-    new Chat('Andrea','image/andrea.jpg', 'Como estas amiga?', '15:24'),
-    new Chat('Fabi','image/avatar.jpg','Tienes un peine?', '10:20')
+    new Chat('Andrea','image/andrea.jpg', 'hellou', '15:24'),
+    new Chat('Fabi','image/avatar.jpg','hellou', '10:20')
 ];
 
 //PARTE VISUAL
@@ -28,7 +33,7 @@ function init()
 {
     //alert('Ya cargo la pagina!');
     initChatList();
-    searchChat();
+    //searchChat();
 }
 
 function initChatList()
@@ -115,13 +120,13 @@ function createChat(_message)
     setEventsChatList();
 }
 
-function changeChatMessages(_contactName)
+function changeChatMessages(contactName)
 {
     var divChat = document.getElementById('chat');
     
     for(var i=0; i<listChats.length; i++){
         
-        var htmlMessageIn = '<div class="w-message w-message-in">'+'<div class="w-message-text">'+'<h5 class="green-1">'+_contactName+'</h5>'+'<p>'+listChats[i].ultimoMensaje+'</p>'+'<div class="time"></div>'+'</div></div>';    
+        var htmlMessageIn = '<div class="w-message w-message-in">'+'<div class="w-message-text">'+'<h5 class="green-1">'+contactName+'</h5>'+'<p>'+listChats[i].ultimoMensaje+'</p>'+'<div class="time"></div>'+'</div></div>';    
         
         divChat.innerHTML = htmlMessageIn;
     }
@@ -134,7 +139,7 @@ function changeChatHeader(_contactName, _contactImageURL, _contactStatus)
     chatHeader.getElementsByClassName('w-users-messages')[0].innerHTML= _contactStatus;
     chatHeader.getElementsByTagName('img')[0].src = _contactImageURL;
 }
-
+/*
 function searchChat()
 {
     var inputSearch = document.getElementById('search');
@@ -153,9 +158,26 @@ function onSearching(evt)
             ulLista[i].style.display = 'none';
         } else {
             ulLista[i].style.display = 'block';
+            console.log("chau");
         }
     }
-}
+}*/
+//Funcion buscador
+var search = document.getElementById("search");
+var contacto = document.getElementsByTagName("h4");
+var forEach = Array.prototype.forEach;
+
+search.addEventListener("keyup", function(e){
+  var choice = this.value;
+
+  forEach.call(contacto, function(f){
+      if (f.innerHTML.toLowerCase().search(choice.toLowerCase()) == -1)
+          f.parentNode.parentNode.style.display = "none";   
+      else
+         f.parentNode.parentNode.style.display = "block";        
+  });
+}, 
+false);
 
 
 /* Prueba de funcion onclick
