@@ -2,19 +2,15 @@
 
 //Para generar plantillas o prototipos
 
-function Chat(_nombre,_image){
+function Chat(_nombre,_image,_ultimoMensaje){
     
     this.nombre = _nombre;
     this.imageURL = _image;
-    this.ultimoMensaje = '';
+    this.ultimoMensaje = _ultimoMensaje;
     this.horaUltimoMensaje = '';
     /*this.contiene = function(_buscar){
         this.nombre.search("")
-    }*/
-    /*this.borrarMensaje = function (){
-        alert('Borrado');
-    };*/
-    
+    }*/    
 }
 
 var listChats = [
@@ -24,9 +20,10 @@ var listChats = [
         ultimoMensaje:'', 
         horaUltimoMensaje:''
     },*/
-    new Chat('Laboratoria Perú','image/logocodeacademy.png'),
-    new Chat('Aldo','image/aldo.jpg'),
-    new Chat('Andrea','image/andrea.jpg'),
+    new Chat('Laboratoria Perú','image/logocodeacademy.png', 'hellou'),
+    new Chat('Aldo','image/aldo.jpg', 'hellou'),
+    new Chat('Andrea','image/andrea.jpg', 'Como estas amiga?'),
+    new Chat('Fabi','image/avatar.jpg','Tienes un peine?')
 ];
 
 //PARTE VISUAL
@@ -36,6 +33,7 @@ function init()
 {
     //alert('Ya cargo la pagina!');
     initChatList();
+    searchChat()
 }
 
 function initChatList()
@@ -66,13 +64,24 @@ function setEventsChatList()
     }
 }
 
+function onChatItemClick(evt)
+{
+    //console.log(evt.currentTarget);//currentTarget para solamente referirme al 'li', evt.target para referirme al elemento especifico que clikeo
+    var contactName = evt.currentTarget.getElementsByClassName('w-contact-name')[0].textContent;
+    var imgURL = evt.currentTarget.getElementsByClassName('wh-44')[0].src;
+    
+    changeChatHeader(contactName,imgURL,'Conectado');
+    changeChatMessages(contactName);
+    createChatList();
+}
+
 function onSendMessage(evt)
 {   
     var elInputMessage = document.getElementById("mensajes");
     
     if(evt.keyCode == 13){
         //console.log(evt);
-        createChat(elInputMessage.value);
+        //createChat(elInputMessage.value);
         createMessage(elInputMessage.value);
         elInputMessage.value="";
     }
@@ -111,20 +120,16 @@ function createChat(_message)
     setEventsChatList();
 }
 
-function createChatList()
+function changeChatMessages(contactName)
 {
     var divChat = document.getElementById('chat');
-    divChat.innerHTML = '';
-}
-
-function onChatItemClick(evt)
-{
-    //console.log(evt.currentTarget);//currentTarget para solamente referirme al 'li', evt.target para referirme al elemento especifico que clikeo
-    var contactName = evt.currentTarget.getElementsByClassName('w-contact-name')[0].textContent;
-    var imgURL = evt.currentTarget.getElementsByClassName('wh-44')[0].src;
     
-    changeChatHeader(contactName,imgURL,'Conectado');
-    createChatList();
+    for(var i=0; i<listChats.length; i++){
+        
+        var htmlMessageIn = '<div class="w-message w-message-in">'+'<div class="w-message-text">'+'<h5 class="green-1">'+contactName+'</h5>'+'<p>'+listChats[i].ultimoMensaje+'</p>'+'<div class="time"></div>'+'</div></div>';    
+        
+        divChat.innerHTML = htmlMessageIn;
+    }
 }
 
 function changeChatHeader(_contactName, _contactImageURL, _contactStatus)
@@ -138,24 +143,25 @@ function changeChatHeader(_contactName, _contactImageURL, _contactStatus)
 function searchChat()
 {
     var inputSearch = document.getElementById('search');
-    
-    inputSearch.addEventListener('onclick',onSearching);
+    inputSearch.addEventListener('click', onSearching);
 }
 
 function onSearching()
-{
+{    
     var chooseContact = this.value;
-    
-    console.log(chooseContact);
+    var listChats = document.getElementById('lista-chats');
+    var arrListItems = listChats.getElementsByTagName('li');
 
-    /*for(var i in liListItem ){
+    for(var i=0; i<arrListItems.length; i++ ){
         
-        if(i.children.children[1].toLowerCase().search(chooseContact.toLowerCase()) == -1){
-            i.style.display = 'none';
+        console.log(arrListItems[i]);
+        /*
+        if(arrListItems[i].children.children[1].toLowerCase().search(chooseContact.toLowerCase()) == -1){
+            arrListItems[i].style.display = 'none';
         } else {
-            i.style.display = 'block';
-        }
-    }*/
+            arrListItems[i].style.display = 'block';
+        }*/
+    } 
 }
 
 
