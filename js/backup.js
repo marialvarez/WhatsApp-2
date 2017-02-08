@@ -2,28 +2,23 @@
 
 //Para generar plantillas o prototipos
 
-function Chat(_nombre,_image,_ultimoMensaje){
+function Chat(_nombre,_image,_ultimoMensaje, _hora){
     
     this.nombre = _nombre;
     this.imageURL = _image;
     this.ultimoMensaje = _ultimoMensaje;
-    this.horaUltimoMensaje = '';
+    this.horaUltimoMensaje = _hora;
     /*this.contiene = function(_buscar){
         this.nombre.search("")
     }*/    
 }
 
 var listChats = [
-    /*{
-        nombre:'Chat 1', 
-        imageURL:'image/logocodeacademy.png', 
-        ultimoMensaje:'', 
-        horaUltimoMensaje:''
-    },*/
-    new Chat('Laboratoria Perú','image/logocodeacademy.png', 'hellou'),
-    new Chat('Aldo','image/aldo.jpg', 'hellou'),
-    new Chat('Andrea','image/andrea.jpg', 'Como estas amiga?'),
-    new Chat('Fabi','image/avatar.jpg','Tienes un peine?')
+
+    new Chat('Laboratoria Perú','image/logocodeacademy.png', 'hellou', '12:30'),
+    new Chat('Aldo','image/aldo.jpg', 'hellou', 'ayer'),
+    new Chat('Andrea','image/andrea.jpg', 'Como estas amiga?', '15:24'),
+    new Chat('Fabi','image/avatar.jpg','Tienes un peine?', '10:20')
 ];
 
 //PARTE VISUAL
@@ -33,7 +28,7 @@ function init()
 {
     //alert('Ya cargo la pagina!');
     initChatList();
-    searchChat()
+    searchChat();
 }
 
 function initChatList()
@@ -72,7 +67,7 @@ function onChatItemClick(evt)
     
     changeChatHeader(contactName,imgURL,'Conectado');
     changeChatMessages(contactName);
-    createChatList();
+    createChat();
 }
 
 function onSendMessage(evt)
@@ -120,13 +115,13 @@ function createChat(_message)
     setEventsChatList();
 }
 
-function changeChatMessages(contactName)
+function changeChatMessages(_contactName)
 {
     var divChat = document.getElementById('chat');
     
     for(var i=0; i<listChats.length; i++){
         
-        var htmlMessageIn = '<div class="w-message w-message-in">'+'<div class="w-message-text">'+'<h5 class="green-1">'+contactName+'</h5>'+'<p>'+listChats[i].ultimoMensaje+'</p>'+'<div class="time"></div>'+'</div></div>';    
+        var htmlMessageIn = '<div class="w-message w-message-in">'+'<div class="w-message-text">'+'<h5 class="green-1">'+_contactName+'</h5>'+'<p>'+listChats[i].ultimoMensaje+'</p>'+'<div class="time"></div>'+'</div></div>';    
         
         divChat.innerHTML = htmlMessageIn;
     }
@@ -143,25 +138,23 @@ function changeChatHeader(_contactName, _contactImageURL, _contactStatus)
 function searchChat()
 {
     var inputSearch = document.getElementById('search');
-    inputSearch.addEventListener('click', onSearching);
+    inputSearch.addEventListener('keyup', onSearching);
 }
 
-function onSearching()
-{    
-    var chooseContact = this.value;
-    var listChats = document.getElementById('lista-chats');
-    var arrListItems = listChats.getElementsByTagName('li');
+function onSearching(evt)
+{      
+    var ulLista = document.getElementById('lista-chats');
+    console.log(ulLista.children[0].children[0].children[1]);
 
-    for(var i=0; i<arrListItems.length; i++ ){
+    for(var i=0; i<ulLista.length; i++ ){
+        console.log(ulLista[i].children[0].children[0].children[1]);
         
-        console.log(arrListItems[i]);
-        /*
-        if(arrListItems[i].children.children[1].toLowerCase().search(chooseContact.toLowerCase()) == -1){
-            arrListItems[i].style.display = 'none';
+        if(ulLista[i].children[0].children[0].children[1].toLowerCase().search(evt.target.value.toLowerCase()) == -1){
+            ulLista[i].style.display = 'none';
         } else {
-            arrListItems[i].style.display = 'block';
-        }*/
-    } 
+            ulLista[i].style.display = 'block';
+        }
+    }
 }
 
 
